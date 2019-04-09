@@ -2182,7 +2182,8 @@ static int msdc_drv_probe(struct platform_device *pdev)
 		goto host_free;
 
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-	host->base = devm_ioremap_resource(&pdev->dev, res);
+        if (res)
+                host->top_base = devm_ioremap_resource(&pdev->dev, res);
 	if (IS_ERR(host->base)) {
 		ret = PTR_ERR(host->base);
 		goto host_free;
