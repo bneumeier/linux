@@ -2180,6 +2180,9 @@ static int msdc_drv_probe(struct platform_device *pdev)
 	ret = mmc_of_parse(mmc);
 	if (ret)
 		goto host_free;
+	ret = mmc_of_parse_voltage(pdev->dev.of_node, &mmc->ocr_avail);
+	if (ret < 0)
+		goto host_free;
 
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
         if (res)
